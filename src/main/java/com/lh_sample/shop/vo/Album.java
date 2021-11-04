@@ -1,0 +1,11 @@
+package com.lh_sample.shop.vo;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("A")
+public class Album extends Item {
+
+    private String artist;
+}
