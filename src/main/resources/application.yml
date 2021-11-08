@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: root
+    password: leeho
+    url: jdbc:mariadb://localhost:3306/forBootJPASample?characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
