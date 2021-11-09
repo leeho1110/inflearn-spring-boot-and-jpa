@@ -1,40 +1,57 @@
 package jpabook.jpashop;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.repositoy.MemberRepository;
+import jpabook.jpashop.service.MemberService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest // Spring Boot를 띄운 상태에서 테스트하기 위해서
+@Transactional // rollback
 public class MemberRepositoryTest {
 
-	@Autowired MemberRepository memberRepository;
+	@Autowired
+	MemberService memberService;
+
+	@Autowired
+	MemberRepository memberRepository;
 
 	@Test
-	@Transactional
-	@Rollback(false)
-	public void testMember() throws Exception {
-
+	public void 회원가입() throws Exception {
 		//given
 		Member member = new Member();
-		member.setUsername("memberA");
+		member.setName("kim");
 
-		// when
-		Long saveId = memberRepository.save(member);
+		//when
+		Long saveId = memberService.join(member);
 
-		// then
-		Member findMember = memberRepository.find(saveId);
+		//then
+		assertThat(memberRepository.findOne(saveId)).isEqualTo(member);
+	}
 
-		Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-		Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-		Assertions.assertThat(findMember).isEqualTo(member);
+	@Test(expected = IllegalStateException.class)
+	public void 중복_회원_예외() throws Exception {
+		//given
+		Member member1 = new Member();
+		member1.setName("kim");
+
+		Member member2 = new Member();
+		member2.setName("kim");
+
+		//when
+		memberService.join(member1);
+		memberService.join(member2);
+
+		//then
+		fail("예외가 발생해야 한다.");
 	}
 
 }
