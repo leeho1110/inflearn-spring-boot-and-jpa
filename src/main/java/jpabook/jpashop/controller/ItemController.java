@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.ItemService;
+import jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ItemController {
 
 	private final ItemService itemService;
+	private final OrderService orderService;
 
 	@GetMapping("/items/new")
 	public String createForm(Model model){
@@ -83,5 +85,12 @@ public class ItemController {
 		itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
 
 		return "redirect:/items";
+	}
+
+	@PostMapping("/orders/{orderId}/cancel")
+	public String cancelOrder(@PathVariable("orderId") Long orderId){
+		orderService.cancelOrder(orderId);
+
+		return "redirect:/orders";
 	}
 }
