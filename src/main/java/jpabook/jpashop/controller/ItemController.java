@@ -65,17 +65,22 @@ public class ItemController {
 	}
 
 	@PostMapping("/items/{itemId}/edit")
-	public String updateItemForm(@ModelAttribute("form") BookForm form){
+	public String updateItemForm(@PathVariable Long itemId, @ModelAttribute("form") BookForm form){
 
-		Book book = new Book();
-		book.setId(form.getId());
-		book.setName(form.getName());
-		book.setPrice(form.getPrice());
-		book.setStockQuantity(form.getStockQuantity());
-		book.setAuthor(form.getAuthor());
-		book.setIsbn(form.getIsbn());
+		// Book book = new Book();
+		// book.setId(form.getId());
+		// book.setName(form.getName());
 
-		itemService.saveItem(book);
+		// merge를 사용하면 안되는 이유
+		// book.setPrice(form.getPrice());
+		// 만약 이때 정책에 의해 변경이 불가능하다고 set을 하지 않는다면? merge때문에 price에는 null이 들어간다.
+		// 따라서 merge 사용하지말고, 항상 변경 감지를 사용!
+
+		// book.setStockQuantity(form.getStockQuantity());
+		// book.setAuthor(form.getAuthor());
+		// book.setIsbn(form.getIsbn());
+
+		itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
 
 		return "redirect:/items";
 	}
