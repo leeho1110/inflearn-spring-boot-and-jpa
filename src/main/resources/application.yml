@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: leeho
-    url: jdbc:mariadb://192.168.200.90:3306/forBootJPASample?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://localhost:3306/forBootJPASample?characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
