@@ -26,6 +26,8 @@ public class Member {
 	private Address address;
 
 	// @JsonIgnore : 최초 멤버 리스트들을 조회하는 로직 중 주문내용을 제거하기 위해 추가했다. 결국 엔티티에 프레젠테이션 계층을 위한 로직(화면에 뿌리기 위한)이 추가되기 시작했다.
+	// 양방향 관계에서 한쪽은 무한루프 호출을 막기 위해서 @JsonIgnore를 걸어 양방향을 끊어줘야 한다.
+	@JsonIgnore
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>();
 }
