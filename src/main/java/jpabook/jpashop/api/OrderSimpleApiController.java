@@ -43,6 +43,13 @@ public class OrderSimpleApiController {
 			.map(SimpleOrderDto::new)
 			.collect(Collectors.toList());
 	}
+
+	@GetMapping("/api/v3/simple-orders")
+	public List<SimpleOrderDto> ordersV3(){
+		return orderRepository.findAllWithMemberDelivery().stream()
+			.map(SimpleOrderDto::new)
+			.collect(Collectors.toList());
+	}
 	
 	@Data
 	static class SimpleOrderDto {
@@ -50,14 +57,14 @@ public class OrderSimpleApiController {
 		private String name;
 		private LocalDateTime orderDate;
 		private OrderStatus orderStatus;
-		private Address address;
+		private Address address; // value object
 
 		public SimpleOrderDto(Order order) {
 			this.orderId = order.getId();
-			this.name = order.getMember().getName();
+			this.name = order.getMember().getName(); // LAZY 로딩 강제 초기화
 			this.orderDate = order.getOrderDate();
 			this.orderStatus = order.getStatus();
-			this.address = order.getDelivery().getAddress();
+			this.address = order.getDelivery().getAddress(); // LAZY 로딩 강제 초기화
 		}
 	}
 	
