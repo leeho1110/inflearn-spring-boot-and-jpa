@@ -23,7 +23,7 @@ public class OrderApiController {
 	private final OrderRepository orderRepository;
 
 	@GetMapping("/api/v1/orders")
-	public List<Order> ordersV1(){
+	public List<Order> ordersV1() {
 		List<Order> all = orderRepository.findAllByString(new OrderSearch());
 
 		for (Order order : all) {
@@ -37,9 +37,16 @@ public class OrderApiController {
 	}
 
 	@GetMapping("/api/v2/orders")
-	public List<OrderDto> ordersV2(){
+	public List<OrderDto> ordersV2() {
 		List<Order> orders = orderRepository.findAllByString(new OrderSearch());
 		return orders.stream()
+			.map(order -> new OrderDto(order))
+			.collect(Collectors.toList());
+	}
+
+	@GetMapping("/api/v3/orders")
+	public List<OrderDto> ordersV3() {
+		return orderRepository.findAllWithItem().stream()
 			.map(order -> new OrderDto(order))
 			.collect(Collectors.toList());
 	}

@@ -108,4 +108,17 @@ public class OrderRepository {
 					"join fetch o.delivery d", Order.class
 		).getResultList();
 	}
+
+	public List<Order> findAllWithItem() {
+		return em.createQuery(
+			"select distinct o from Order o" // `distinct` 는 1:N 조인으로 인한 데이터베이스 row 증가를 막아준다.
+				+ " join fetch o.member m"
+				+ " join fetch o.delivery d"
+				+ " join fetch o.orderItems oi"
+				+ " join fetch oi.item i", Order.class)
+			.setFirstResult(1)
+			.setMaxResults(100)
+			.getResultList(); // 컬렉
+
+	}
 }
