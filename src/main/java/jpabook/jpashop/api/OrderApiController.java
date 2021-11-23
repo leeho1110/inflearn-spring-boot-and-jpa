@@ -13,9 +13,9 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderSearch;
 import jpabook.jpashop.domain.OrderStatus;
-import jpabook.jpashop.repositoy.OrderRepository;
-import jpabook.jpashop.repositoy.order.query.OrderQueryDto;
-import jpabook.jpashop.repositoy.order.query.OrderQueryRepository;
+import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.order.query.OrderQueryDto;
+import jpabook.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -69,10 +69,9 @@ public class OrderApiController {
 	}
 
 	@GetMapping("/api/v4/orders")
-	public List<OrderQueryDto> ordersV4(
-		
+	public List<OrderQueryDto> ordersV4(){
+		return orderQueryRepository.findOrderQueryDtos();
 	}
-
 
 	@Getter
 	static class OrderDto {

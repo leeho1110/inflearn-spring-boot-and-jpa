@@ -18,7 +18,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.exception.NotEnoughStockException;
-import jpabook.jpashop.repositoy.OrderRepository;
+import jpabook.jpashop.repository.OrderRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

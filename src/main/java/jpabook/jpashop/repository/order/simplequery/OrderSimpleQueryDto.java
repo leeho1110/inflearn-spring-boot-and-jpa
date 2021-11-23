@@ -1,4 +1,4 @@
-package jpabook.jpashop.repositoy.order.simplequery;
+package jpabook.jpashop.repository.order.simplequery;
 
 import java.time.LocalDateTime;
 
