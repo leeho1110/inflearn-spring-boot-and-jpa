@@ -14,6 +14,8 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderSearch;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repositoy.OrderRepository;
+import jpabook.jpashop.repositoy.order.query.OrderQueryDto;
+import jpabook.jpashop.repositoy.order.query.OrderQueryRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderApiController {
 
 	private final OrderRepository orderRepository;
+	private final OrderQueryRepository orderQueryRepository;
 
 	@GetMapping("/api/v1/orders")
 	public List<Order> ordersV1() {
@@ -55,8 +58,7 @@ public class OrderApiController {
 	@GetMapping("/api/v3.1/orders")
 	public List<OrderDto> ordersV3_page(
 			@RequestParam(value = "offset", defaultValue = "0") int offset,
-			@RequestParam(value = "limit", defaultValue = "100") int limit)
-	{
+			@RequestParam(value = "limit", defaultValue = "100") int limit) {
 		List<Order> orders = orderRepository.findAllWithMemberDelivery(offset,limit);
 
 		List<OrderDto> result = orders.stream()
@@ -65,6 +67,13 @@ public class OrderApiController {
 
 		return result;
 	}
+
+	@GetMapping("/api/v4/orders")
+	public List<OrderQueryDto> ordersV4(
+		
+	}
+
+
 	@Getter
 	static class OrderDto {
 
