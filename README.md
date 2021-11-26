@@ -88,4 +88,9 @@ DB의 조회 자체에서 중복이 제거되지는 않는다.
 
 **결론** : ToOne 관계는 Fetch 조인해서 쿼리수를 줄이는 것 + 페이징에 영향을 주지 않도록 해결하고, 나머지는 `hibernate.default_batch_fetch_size` 로 최적화하자!
 
+---
+
+**컬렉션 조회 최적화**
+
+ToOne 관계들을 먼저 조회하고, 여기서 얻은 식별자 OrderId로 ToMany 관계인 `OrderItem` 을 Map, IN 을 통해 한꺼번에 조회하여 매칭 성능을 향상 
 
